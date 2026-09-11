@@ -1,0 +1,28 @@
+{
+  "name": "cluys/ivy-base-template",
+  "description": "Base system template for ivy CMS",
+  "type": "ivy-template",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Joep Dooper"
+    }
+  ],
+  "require": {
+    "php": ">=8.5.6"
+  },
+  "extra": {
+    "ivy": {
+      "name": "Base",
+      "type": "base",
+      "interface": "Cluys\\Template\\Base\\BaseTemplate"
+    }
+  },
+  "autoload": {
+    "psr-4": {
+      "Cluys\\Template\\Base\\": "classes/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}

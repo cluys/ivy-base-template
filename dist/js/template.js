@@ -1,0 +1,1 @@
+document.addEventListener("ts-req-after",r=>{const e=new DOMParser().parseFromString(r.detail.response,"text/html").querySelector("#flashes");e&&(document.querySelector("#flashes").innerHTML=e.innerHTML)});
