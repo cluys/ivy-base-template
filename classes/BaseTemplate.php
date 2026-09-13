@@ -2,10 +2,7 @@
 
 namespace Cluys\Template\Base;
 
-use Illuminate\Database\Capsule\Manager as Capsule;
-use Illuminate\Database\Schema\Blueprint;
 use Ivy\Template\Application\Contracts\TemplateInterface;
-use Ivy\Shared\Presentation\Routing\Route;
 use Ivy\Template\Infrastructure\Manager\AssetManager;
 use Ivy\Template\Infrastructure\Manager\TemplateManager;
 use Ivy\User\Application\Service\AuthService;
