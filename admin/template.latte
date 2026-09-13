@@ -1,5 +1,15 @@
 {extends file('body.latte')}
 
+{define search}
+    {if canEditAsSuperAdmin()}
+        {include file('include/search.latte'),
+        placeholder: text('template.search'),
+        target: '#index',
+        search: null
+        }
+    {/if}
+{/define}
+
 {block main}
     <main class="grow p-4 w-full max-w-5xl mx-auto">
         <form ts-req="{path('BASE_PATH') . 'admin/template/sync'}" ts-target="target" method="POST" enctype="multipart/form-data">
@@ -23,54 +33,42 @@
                     </div>
                 </div>
 
-                <div class="overflow-x-auto rounded-box border border-base-content/5">
+                <div n:if="!$templates->isEmpty()" class="overflow-x-auto rounded-box border border-base-content/5">
                     <table class="table">
                         <thead>
                         <tr>
                             <th>{text('template.name')}</th>
-                            <th>{text('template.select')}</th>
+                            <th>{text('template.description')}</th>
+                            <th>{text('template.version')}</th>
+                            <th>{text('template.type')}</th>
+                            <th>{text('template.status')}</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>
-                                <input type="hidden" name="template[1][id]" value="1">
-                                Base
-                            </td>
-                            <td>
-                                <label>
-                                    <select class="select select-bordered w-full" name="template[1][value]">
-                                        {foreach array_diff(scandir(path('TEMPLATES_PATH')), array('.', '..', '.DS_Store')) as $val}
-                                            {php $theme = json_decode(file_get_contents(path('TEMPLATES_PATH') . $val . '/info.json'))}
-                                            <option value="{$theme->url}" {$templateBase === $theme->url ? 'selected' : ''}>
-                                                {$theme->name . ' (' . $theme->description . ')'}
-                                            </option>
-                                        {/foreach}
-                                    </select>
-                                </label>
-                            </td>
+                        {foreach $templates as $key => $template}
+                            <tr>
+                                <td>
+                                    <input type="hidden" name="template[{$key}][id]" value="1">
+                                    {$template->name}
+                                </td>
+                                <td>{$template->description}</td>
+                                <td>
+                                    <span class="badge badge-sm badge-soft badge-accent font-bold">
+                                        {$template->version} - {$template->version_channel}
+                                    </span>
+                                </td>
+                                <td>
+                                    <div class="badge badge-sm badge-soft badge-info font-bold">
+                                        {$template->type}
+                                    </div>
+                                </td>
+                                <td>
+                                    {* include file('include/plugin-status.latte'), plugin: $plugin *}
+                                </td>
                         </tr>
-                        <tr>
-                            <td>
-                                <input type="hidden" name="template[2][id]" value="2">
-                                Sub
-                            </td>
-                            <td>
-                                <label>
-                                    <select class="select select-bordered w-full" name="template[2][value]">
-                                        {foreach array_diff(scandir(path('TEMPLATES_PATH')), array('.', '..', '.DS_Store')) as $val}
-                                            {php $theme = json_decode(file_get_contents(path('TEMPLATES_PATH') . $val . '/info.json'))}
-                                            <option value="{$theme->url}" {$templateSub === $theme->url ? 'selected' : ''}>
-                                                {$theme->name . ' (' . $theme->description . ')'}
-                                            </option>
-                                        {/foreach}
-                                    </select>
-                                </label>
-                            </td>
-                        </tr>
+                        {/foreach}
                         </tbody>
                     </table>
-
                 </div>
 
                 <div class="text-center">
