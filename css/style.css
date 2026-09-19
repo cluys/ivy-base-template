@@ -91,10 +91,12 @@ form.ts-active {
     pointer-events: none;
 }
 
-form.ts-active button[type="submit"] .submit-btn-loader {
+form.ts-active button[type="submit"] .submit-btn-loader,
+form.ts-active label.btn .submit-btn-loader {
     @apply loading loading-dots loading-xs visible;
 }
 
-form.ts-active button[type="submit"] .submit-btn-text {
+form.ts-active button[type="submit"] .submit-btn-text,
+form.ts-active label.btn .submit-btn-text{
     @apply invisible;
 }

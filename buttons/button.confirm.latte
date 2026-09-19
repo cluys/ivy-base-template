@@ -1,6 +1,22 @@
-<button class="btn btn-soft btn-primary btn-square join-item"
-        type="submit"
-        name="submit" value="{$value}" title="{$title}"
-        {if isset($form_action)}formaction="{$form_action}"{/if}>
-    {icon("feather/check.svg")|noescape}
-</button>
+<label class="{$class ?? 'btn btn-primary shadow-none'} leading-none px-4"
+       title="{text('button.delete') . ' ' . ($placeholder ?? $id)}"
+       for="modal_{$name}_{$id}"
+       {if isset($disabled) && $disabled}disabled="disabled"{/if}>
+    <span class="submit-btn-loader absolute"></span>
+    <span class="submit-btn-text relative">{$text}</span>
+</label>
+
+<input type="checkbox" id="modal_{$name}_{$id}" class="modal-toggle block" name="{$name}" {if isset($value) && $value}value="{$value}"{/if}/>
+<div class="modal text-left" role="dialog">
+    <div class="modal-box">
+        <label class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" for="modal_{$name}_{$id}">✕</label>
+        <h3 class="text-lg font-bold">{$text}</h3>
+        <p class="py-4">{text('modal.confirm_question', ['placeholder' => $placeholder ?? $id, 'text' => strtolower($text)])}</p>
+        <div class="modal-action">
+            <label for="modal_{$name}_{$id}" class="btn">{text('button.cancel')}</label>
+            <button class="btn btn-primary shadow-none"
+                    name="submit" type="submit">{$text}
+            </button>
+        </div>
+    </div>
+</div>

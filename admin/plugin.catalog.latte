@@ -17,7 +17,7 @@
 
             <div n:if="!empty($catalog)" class="grid md:grid-cols-3 gap-4 sm:grid-cols-2 grid-cols-1">
                 {if canEditAsSuperAdmin()}
-                    {foreach $catalog as $plugin}
+                    {foreach $catalog as $key => $plugin}
                         <div class="card bg-base-100 shadow-sm">
                             <div class="card-body">
                                 <h2 class="card-title">
@@ -30,9 +30,9 @@
                                     <span n:if="isset($plugin['extra']['ivy']['type'])" class="badge badge-sm badge-soft badge-info font-bold">
                                         {$plugin['extra']['ivy']['type']}
                                     </span>
-                                    {if $plugin['plugin']}
+                                    {if $plugin['model']}
                                         <div class="badge badge-sm badge-soft badge-secondary font-bold">
-                                            {include file('include/plugin.status.latte'), plugin: $plugin['plugin']}
+                                            {include file('include/plugin.status.latte'), plugin: $plugin['model']}
                                         </div>
                                     {/if}
                                 </div>
@@ -40,10 +40,31 @@
                                     {isset($plugin['description']) ? $plugin['description'] : ""}
                                 </p>
                                 <div class="card-actions">
-                                    {if ! $plugin['plugin']}
+                                    {if ! $plugin['model']}
                                         <form class="block w-full" method="POST" ts-req="{path('BASE_PATH') . 'admin/plugin/add'}" ts-data="package={$plugin['package']}" ts-target="target">
                                             {csrf()}
-                                            {button type:submit, text:text('button.install')}
+                                            {button
+                                                class:'btn btn-block btn-primary shadow-none',
+                                                type:confirm,
+                                                name:'plugin_install',
+                                                text:text('button.install'),
+                                                value:$key,
+                                                id:$key,
+                                                placeholder:$plugin['extra']['ivy']['name'] ?? $plugin['package']
+                                            }
+                                        </form>
+                                    {else}
+                                        <form class="block w-full" ts-req="{path('BASE_PATH') . 'admin/plugin/'.$plugin['model']->id.'/delete'}" ts-target="target" method="POST" enctype="multipart/form-data">
+                                            {csrf()}
+                                            {button
+                                                class:'btn btn-block btn-soft btn-primary shadow-none',
+                                                type:confirm,
+                                                name:'plugin_install',
+                                                text:text('button.uninstall'),
+                                                value:$plugin['model']->id,
+                                                id:$plugin['model']->id,
+                                                placeholder:$plugin['model']->name
+                                            }
                                         </form>
                                     {/if}
                                 </div>
