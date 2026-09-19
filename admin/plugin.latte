@@ -64,7 +64,9 @@
                             </td>
                             <td><div class="badge badge-sm badge-soft badge-info font-bold">{$plugin->type}</div></td>
                             <td>
-                                {include file('include/plugin-status.latte'), plugin: $plugin}
+                                <div class="badge badge-sm badge-soft badge-secondary font-bold">
+                                    {include file('include/plugin.status.latte'), plugin: $plugin}
+                                </div>
                             </td>
                             <td class="text-right">
                                 <input type="hidden" name="plugin[{$key}][id]"

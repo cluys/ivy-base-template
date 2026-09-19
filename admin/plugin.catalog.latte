@@ -30,17 +30,22 @@
                                     <span n:if="isset($plugin['extra']['ivy']['type'])" class="badge badge-sm badge-soft badge-info font-bold">
                                         {$plugin['extra']['ivy']['type']}
                                     </span>
+                                    {if $plugin['plugin']}
+                                        <div class="badge badge-sm badge-soft badge-secondary font-bold">
+                                            {include file('include/plugin.status.latte'), plugin: $plugin['plugin']}
+                                        </div>
+                                    {/if}
                                 </div>
                                 <p>
                                     {isset($plugin['description']) ? $plugin['description'] : ""}
                                 </p>
                                 <div class="card-actions">
-                                    <form class="block w-full" method="POST" ts-req="{path('BASE_PATH') . 'admin/plugin/add'}" ts-data="package={$plugin['package']}" ts-target="target">
-                                        {csrf()}
-                                        <button class="btn btn-primary btn-block shadow-none leading-none px-4">
-                                            {text('button.install')}
-                                        </button>
-                                    </form>
+                                    {if ! $plugin['plugin']}
+                                        <form class="block w-full" method="POST" ts-req="{path('BASE_PATH') . 'admin/plugin/add'}" ts-data="package={$plugin['package']}" ts-target="target">
+                                            {csrf()}
+                                            {button type:submit, text:text('button.install')}
+                                        </form>
+                                    {/if}
                                 </div>
                             </div>
                         </div>

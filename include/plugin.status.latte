@@ -1,0 +1,18 @@
+{if !in_array($plugin->status, [
+Ivy\Shared\Domain\Enum\Status::INSTALLED,
+Ivy\Shared\Domain\Enum\Status::FAILED,
+Ivy\Shared\Domain\Enum\Status::ACTIVE,
+Ivy\Shared\Domain\Enum\Status::CANCELED
+])}
+    <span
+            ts-req="/admin/plugin/{$plugin->id}/status"
+            ts-trigger="load delay 500"
+            ts-target="target"
+    >
+        {$plugin->status->value}
+    </span>
+{else}
+    <span>
+        {$plugin->status->value}
+    </span>
+{/if}
