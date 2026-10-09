@@ -2,8 +2,8 @@
 @plugin "daisyui" {
     themes: light --default, dark --prefersdark;
 }
-@source "../../../plugins/**/*.latte";
-@source "../../../templates/**/*.latte";
+@source "../../../plugins/";
+@source "../../../templates/";
 
 html, body {
     min-height: 100%;
