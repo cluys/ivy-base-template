@@ -1,7 +1,7 @@
 {extends file('body.latte')}
 
 {define search}
-    {if canEditAsSuperAdmin()}
+    {if canEditAsAdmin()}
         {include file('include/search.latte'),
         placeholder: text('template.search'),
         target: '#index',
@@ -15,7 +15,7 @@
         <div class="space-y-4">
             <h1 class="leading-none text-6xl font-bold">{text('template.catalog')}</h1>
 
-            <div n:if="!empty($catalog)" class="grid md:grid-cols-3 gap-4 sm:grid-cols-2 grid-cols-1">
+            <div id="index" n:if="!empty($catalog)" class="grid md:grid-cols-3 gap-4 sm:grid-cols-2 grid-cols-1">
                 {if canEditAsSuperAdmin()}
                     {foreach $catalog as $template}
                         <div class="card bg-base-100 shadow-sm">
