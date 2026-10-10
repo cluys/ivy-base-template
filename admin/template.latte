@@ -56,6 +56,11 @@
                                     <span class="badge badge-sm badge-soft badge-accent font-bold">
                                         {$template->version} - {$template->version_channel}
                                     </span>
+                                    {if $template->latest_version}
+                                        <span class="badge badge-sm badge-soft badge-warning font-bold">
+                                            {$template->latest_version} - {$template->latest_version_channel}
+                                        </span>
+                                    {/if}
                                 </td>
                                 <td>
                                     <div class="badge badge-sm badge-soft badge-info font-bold">

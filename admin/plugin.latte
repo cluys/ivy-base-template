@@ -61,6 +61,11 @@
                                 <span class="badge badge-sm badge-soft badge-accent font-bold">
                                     {$plugin->version} - {$plugin->version_channel}
                                 </span>
+                                {if $plugin->latest_version}
+                                    <span class="badge badge-sm badge-soft badge-warning font-bold">
+                                        {$plugin->latest_version} - {$plugin->latest_version_channel}
+                                    </span>
+                                {/if}
                             </td>
                             <td><div class="badge badge-sm badge-soft badge-info font-bold">{$plugin->type}</div></td>
                             <td>
