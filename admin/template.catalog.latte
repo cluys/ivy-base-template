@@ -17,7 +17,7 @@
 
             <div id="index" n:if="!empty($catalog)" class="grid md:grid-cols-3 gap-4 sm:grid-cols-2 grid-cols-1">
                 {if canEditAsSuperAdmin()}
-                    {foreach $catalog as $template}
+                    {foreach $catalog as $key => $template}
                         <div class="card bg-base-100 shadow-sm">
                             <div class="card-body">
                                 <h2 class="card-title">
@@ -30,17 +30,43 @@
                                     <span n:if="isset($template['extra']['ivy']['type'])" class="badge badge-sm badge-soft badge-info font-bold">
                                         {$template['extra']['ivy']['type']}
                                     </span>
+                                    {if $template['model']}
+                                        <div class="badge badge-sm badge-soft badge-secondary font-bold">
+                                            {include file('include/status.latte'), status: $template['model']->status, url: '/admin/template/'. $template['model']->id.'/status'}
+                                        </div>
+                                    {/if}
                                 </div>
                                 <p>
                                     {isset($template['description']) ? $template['description'] : ""}
                                 </p>
                                 <div class="card-actions">
-                                    <form class="block w-full" method="POST" ts-req="{path('BASE_PATH') . 'admin/template/add'}" ts-data="package={$template['package']}" ts-target="target">
-                                        {csrf()}
-                                        <button class="btn btn-primary btn-block shadow-none leading-none px-4">
-                                            {text('button.install')}
-                                        </button>
-                                    </form>
+                                    {if ! $template['model']}
+                                        <form class="block w-full" method="POST" ts-req="{path('BASE_PATH') . 'admin/template/add'}" ts-data="package={$template['package']}" ts-target="target">
+                                            {csrf()}
+                                            {button
+                                                class:'btn btn-block btn-primary shadow-none',
+                                                type:confirm,
+                                                name:'template_install',
+                                                text:text('button.install'),
+                                                value:$key,
+                                                id:$key,
+                                                placeholder:$template['extra']['ivy']['name'] ?? $template['package']
+                                            }
+                                        </form>
+                                    {else}
+                                        <form class="block w-full" ts-req="{path('BASE_PATH') . 'admin/template/'.$template['model']->id.'/delete'}" ts-target="target" method="POST" enctype="multipart/form-data">
+                                            {csrf()}
+                                            {button
+                                                class:'btn btn-block btn-soft btn-primary shadow-none',
+                                                type:confirm,
+                                                name:'template_install',
+                                                text:text('button.uninstall'),
+                                                value:$template['model']->id,
+                                                id:$template['model']->id,
+                                                placeholder:$template['model']->name
+                                            }
+                                        </form>
+                                    {/if}
                                 </div>
                             </div>
                         </div>

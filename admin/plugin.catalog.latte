@@ -32,7 +32,7 @@
                                     </span>
                                     {if $plugin['model']}
                                         <div class="badge badge-sm badge-soft badge-secondary font-bold">
-                                            {include file('include/plugin.status.latte'), plugin: $plugin['model']}
+                                            {include file('include/status.latte'), status: $plugin['model']->status, url: '/admin/plugin/'. $plugin['model']->id.'/status'}
                                         </div>
                                     {/if}
                                 </div>

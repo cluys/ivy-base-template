@@ -63,7 +63,9 @@
                                     </div>
                                 </td>
                                 <td>
-                                    {* include file('include/plugin-status.latte'), plugin: $plugin *}
+                                    <div class="badge badge-sm badge-soft badge-secondary font-bold">
+                                        {include file('include/status.latte'), status: $template->status, url: '/admin/template/'. $template->id.'/status'}
+                                    </div>
                                 </td>
                         </tr>
                         {/foreach}
